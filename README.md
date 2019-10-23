@@ -1,5 +1,5 @@
 ## Run MouseActivity in MATLAB
-1. Download MouseActivity5.m, xlwrite.m and the folder poi_library into a folder in your computer;
+1. Download MouseActivity5.m, xlwrite.m and the folder poi_library into a folder on your computer;
 2. Open MATLAB R2018b;
 3. Go to the folder containing MouseActivity5.m in MATLAB;
 4. Double-click the file MouseActivity5.m;
