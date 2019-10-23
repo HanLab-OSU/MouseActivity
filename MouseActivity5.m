@@ -266,14 +266,14 @@ end
         
 end        
 
-function analysis(filename, dirpath)
+function analysis(filename1, dirpath1)
    
-    filepath = [dirpath filename];
+    filepath = [dirpath1 filename1];
     
     [u1 video_name u2] = fileparts(filepath);
                 
     result_name = [video_name '_result.mat'];
-    resultpath = [dirpath video_name '/' result_name];
+    resultpath = [dirpath1 video_name '/' result_name];
 
     R = load(resultpath);
     startframe = R.result.StartFrame;
@@ -352,7 +352,7 @@ function analysis(filename, dirpath)
     ylabel('Distribution','FontSize',16);
     set(gca,'fontsize',16,'linewidth',2,'box','on')
 
-    imgfilename1 = [dirpath video_name '/' video_name '_orientation'];
+    imgfilename1 = [dirpath1 video_name '/' video_name '_orientation'];
 
     % set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0.04, 1, 0.96]);
     set(gcf, 'Position', [0, 0.04, 450, 900]);
@@ -367,7 +367,7 @@ function analysis(filename, dirpath)
     end
 
     xlsfilename = [video_name '_result.xls'];
-    logf('Saving Results into Excel and TIFF files, please wait...', [dirpath video_name '/' xlsfilename]);
+    logf('Saving Results into Excel and TIFF files, please wait...', [dirpath1 video_name '/' xlsfilename]);
 
     for i=1:mouseN
 
@@ -408,12 +408,12 @@ function analysis(filename, dirpath)
         TimeOuter1 = totalframe.*step./frameRate - TimeInner1;
         Thigmotaxis1 = 1-timesin1./length(x);
         summarytitle = [{'FileName'},{[mouse '_Outer (s)']},{[mouse '_Inner (s)']},{[mouse '_Thigmotaxis']}];
-        summaryresults = [{[dirpath video_name '.mov']},TimeOuter1,TimeInner1,Thigmotaxis1];
+        summaryresults = [{[dirpath1 video_name '.mov']},TimeOuter1,TimeInner1,Thigmotaxis1];
 
-        xlwrite([dirpath video_name '/' xlsfilename],titlerow,mouse,'A1');
-        xlwrite([dirpath video_name '/' xlsfilename],finaldata,mouse,'A2');
-        xlwrite([dirpath video_name '/' xlsfilename],summarytitle,mouse,'G1');
-        xlwrite([dirpath video_name '/' xlsfilename],summaryresults,mouse,'G2');
+        xlwrite([dirpath1 video_name '/' xlsfilename],titlerow,mouse,'A1');
+        xlwrite([dirpath1 video_name '/' xlsfilename],finaldata,mouse,'A2');
+        xlwrite([dirpath1 video_name '/' xlsfilename],summarytitle,mouse,'G1');
+        xlwrite([dirpath1 video_name '/' xlsfilename],summaryresults,mouse,'G2');
 
         xv1{i} = xv;
         yv1{i} = yv;
@@ -458,12 +458,12 @@ function analysis(filename, dirpath)
     % title(sprintf(video_name));
     title([video_name '.mov'],'Interpreter','none');
 
-    imgfilename = [dirpath video_name '/' video_name '_summary'];
+    imgfilename = [dirpath1 video_name '/' video_name '_summary'];
     print(gcf,[imgfilename '.tif'],'-dtiff','-r300');
     hold off
     %delete(hsum);
 
-    logf('Results saved to folder %s', [dirpath video_name '/']);
+    logf('Results saved to folder %s', [dirpath1 video_name '/']);
 
 end    
 
