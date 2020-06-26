@@ -47,7 +47,7 @@ if exist(resultpath, 'file') ~= 2
         return;
     end    
         nframes = video_obj.NumberOfFrames;
-        frame100 = read(video_obj,1000);
+        frame100 = read(video_obj, round(nframes/2));
         videosize = [video_obj.Width,video_obj.Height];
         frameRate = video_obj.FrameRate;
         duration = video_obj.Duration;
@@ -89,6 +89,9 @@ if exist(resultpath, 'file') ~= 2
         MouseN = floor(str2double(answer{3})); % the number of mouse in the movie, default is 2
         StartFrame = floor(str2double(answer{4})); % the first frame to be analyzed, default is 1
         LastFrame = floor(str2double(answer{5})); % the last frame to be analyzed, default is the maximum frame number
+        if LastFrame > nframes
+            LastFrame = nframes;
+        end
         Step = floor(str2double(answer{6})); % the frame steps to be analyzed (e.g. analyze every 'x' frame), default is 1
         close all;
         
@@ -134,7 +137,8 @@ if exist(resultpath, 'file') ~= 2
 
      tic;
      tStart = tic;
-     x = StartFrame:Step:LastFrame;
+     x = StartFrame:Step:floor((LastFrame-StartFrame)/Step)*Step+StartFrame; % floor((LastFrame-StartFrame)/Step)*Step+StartFrame
+     %logf(num2str(floor((LastFrame-StartFrame)/Step)*Step+StartFrame));
      %logf(num2str(x));
      %logf(num2str(length(x)));
      
@@ -176,8 +180,8 @@ if exist(resultpath, 'file') ~= 2
             end
             %the following three lines greatly accelerate the read
             %videoframe process
-            if Step>1
-                read(video_obj,[x(jj)+1 min(nframes,x(jj)+Step-1)]);            
+            if Step>1 && x(jj)+1<LastFrame
+                read(video_obj,[x(jj)+1 min(LastFrame,x(jj)+Step-1)]);            
             end
 
          waitbar(jj/length(x),f,sprintf(['Tracking Progress: ' num2str(round(jj*10000/length(x))/100) '%%']))
@@ -224,13 +228,13 @@ end
                 ori = R.result.orientation;
                 area = R.result.area;
                 step = R.result.step;
-                x = startframe:step:lastframe;
+                x = startframe:step:floor((lastframe-startframe)/step)*step+startframe;
                 
                 F(min(length(x),900)) = struct('cdata',[],'colormap',[]);
 
                 colors = ['b', 'r', 'g', 'm', 'y'];
 
-                for i=1:min(length(x),900)
+                for i=1:min(length(x),900) %here you can change to for i=1:length(x)
 
                     vframe = read(video_obj,x(i));               
                     image(vframe);
