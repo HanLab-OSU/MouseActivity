@@ -68,6 +68,7 @@ if exist(resultpath, 'file') ~= 2
         for k = 1:length(kk)
             subplot(2,3,k+1)
             imshow(bwareaopen(im2bw(255 - frame100, kk(k)),50) * 255);
+            %imshow(bwareaopen(im2bw(frame100, kk(k)),50) * 255); % use this line for white mouse
             set(gca,'tag',num2str(kk(k)))
             title(['Threshold: ' num2str(kk(k))]);            
         end
@@ -152,6 +153,7 @@ if exist(resultpath, 'file') ~= 2
      for jj = 1:length(x)
          
             frame2 = bwareaopen(im2bw(255-read(video_obj,x(jj)), threshold),objpixels) * 255; % remove any object smaller than 50 pixels
+            %frame2 = bwareaopen(im2bw(read(video_obj,x(jj)), threshold),objpixels) * 255; % use this for white mouse
             
             for m = 1:MouseN
                 %roi = frame2(ya{m}:ya{m}+arena_h{m}, xa{m}:xa{m}+arena_w{m});
