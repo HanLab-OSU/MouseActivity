@@ -23,12 +23,14 @@ Open MatLab install the app by using 'Install App' under the 'APPS' menu.
 A 'draw next' pushbutton is added to the window, to draw next rectangle area for mouse activity. 
 
 For white mouse in black background, please 
-1) comment out the following lines:
+1) Comment out the following lines:
 
 imshow(bwareaopen(im2bw(255 - frame100, kk(k)),50) * 255);
+
 frame2 = bwareaopen(im2bw(255-read(video_obj,x(jj)), threshold),objpixels) * 255; % remove any object smaller than 50 pixels
 
 3) Uncomment the following lines:
 
 %imshow(bwareaopen(im2bw(frame100, kk(k)),50) * 255); % use this line for white mouse
+
 %frame2 = bwareaopen(im2bw(read(video_obj,x(jj)), threshold),objpixels) * 255; % use this for white mouse
